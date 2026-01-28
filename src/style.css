@@ -1,0 +1,338 @@
+/*  =========== Reset =========  */
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+
+body {
+  /* 3. Add accessible line-height */
+  line-height: 1.5;
+  /* 4. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 5. Improve media defaults */
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 6. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 7. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 8. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/* font */
+@font-face {
+  font-family: Roboto;
+  src:
+    url(./fonts/Roboto-400.woff) format(woff),
+    url(./fonts/Pacifico-Regular.woff2) format(woff2);
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Pacifico;
+  src:
+    url(./fonts/Pacifico-Regular.woff) format(woff),
+    url(./fonts/Pacifico-Regular.woff2) format(woff2);
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+}
+
+:root {
+  --pri-accent: rgb(217, 176, 13);
+  --sec-accent: rgb(195, 185, 40);
+  --white: rgb(255, 255, 255);
+  --black: rgb(0, 0, 0);
+  --error-transparent: rgba(249, 12, 12, 0.2);
+  --error: rgba(249, 12, 12);
+
+  --transparent-white-xsm: rgba(255, 255, 255, 0.8);
+  --transparent-white-sm: rgba(255, 255, 255, 0.5);
+  --transparent-white-lg: rgba(255, 255, 255, 0.2);
+
+  --transparent-black-xsm: rgba(0, 0, 0, 0.8);
+  --transparent-black-sm: rgba(0, 0, 0, 0.5);
+  --transparent-black-lg: rgba(0, 0, 0, 0.2);
+
+  --sz-xxsm: 2px;
+  --sz-xsm: 5px;
+  --sz-sm: 10px;
+  --sz-lg: 20px;
+  --sz-xlg: 30px;
+  --sz-xxlg: 60px;
+
+  --bx-shadow: 0.5px 0.5px 5px var(--transparent-black-xsm);
+}
+
+:root.dark {
+  --black: rgb(255, 255, 255);
+  --white: rgb(0, 0, 0);
+
+  --transparent-black-xsm: rgba(255, 255, 255, 0.8);
+  --transparent-black-sm: rgba(255, 255, 255, 0.5);
+  --transparent-black-lg: rgba(255, 255, 255, 0.2);
+
+  --transparent-white-xsm: rgba(0, 0, 0, 0.8);
+  --transparent-white-sm: rgba(0, 0, 0, 0.5);
+  --transparent-white-lg: rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: Roboto, arial;
+  font-size: clamp(
+    var(--sz-sm),
+    var(--sz-sm) + 0.5vw,
+    var(--sz-sm) + var(--sz-xsm)
+  );
+  background-color: var(--white);
+  color: var(--black);
+}
+
+.container {
+  max-width: 700px;
+  padding: 0 var(--sz-lg);
+  margin: 0 auto 0;
+  height: 100vh;
+  background-color: var(--white);
+
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sz-sm);
+  padding-top: var(--sz-lg);
+}
+
+.top-header {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo{
+  font-family: Pacifico, cursive, Arial, Helvetica, sans-serif;
+  border-left: var(--pri-accent) solid var(--sz-xxsm);
+}
+
+.toggle_theme_header {
+  display: flex;
+  justify-content: right;
+  gap: var(--sz-sm);
+  align-items: center;
+}
+
+.toggle_theme {
+  appearance: none;
+  min-width: var(--sz-lg);
+  min-height: var(--sz-lg);
+  background-color: var(--white);
+  border-radius: 50%;
+  transition: 300ms;
+  border: var(--sz-xxsm) solid var(--black);
+
+  &:checked {
+    border-color: var(--white);
+    background-color: var(--black);
+  }
+}
+
+form {
+  margin: 0 auto 0;
+  min-width: max(50%, 200px);
+
+  display: grid;
+  grid-template-columns: 1fr var(--sz-lg);
+  column-gap: var(--sz-sm);
+  row-gap: var(--sz-lg);
+
+  position: relative;
+}
+
+.enterSearchAddress {
+  padding: var(--sz-xsm) var(--sz-sm);
+  border-radius: var(--sz-sm);
+  box-shadow: var(--bx-shadow);
+  border: none;
+  background: var(--transparent-black-lg);
+  color: var(--transparent-black-xsm);
+}
+
+.btnSendAddress {
+  background: none;
+  border: none;
+  color: var(--transparent-black-sm);
+  position: relative;
+}
+
+.loading-address-data {
+  position: absolute;
+  inset: -10px 0 0 2px;
+}
+
+.loading-address-data .circle {
+  stroke: var(--transparent-black-xsm);
+}
+
+.error-message-section {
+  width: max-content;
+
+  display: flex;
+  justify-content: center;
+  column-gap: var(--sz-sm);
+
+  background: var(--error-transparent);
+  border: var(--sz-xxsm) solid var(--error);
+  padding: var(--sz-xsm) var(--sz-lg);
+  border-radius: var(--sz-sm);
+  margin: 0 auto 0;
+  transition: 300ms;
+  
+  position: absolute;
+  top: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: var(--sz-lg);
+  min-height: 500px;
+  padding-top: var(--sz-xxlg);
+}
+
+.address {
+  font-size: var(--sz-xlg);
+  color: var(--pri-accent);
+  font-weight: 900;
+}
+
+.not-available-img {
+  height: 200px;
+}
+
+.not-available-img .path {
+  fill: var(--transparent-black-xsm);
+}
+
+.conditionIcon {
+  height: 150px;
+}
+
+.data-temp-convert-section {
+  display: flex;
+  gap: var(--sz-lg);
+}
+
+.data-temp-unit {
+  background-color: var(--transparent-black-xsm);
+  border-radius: var(--sz-xsm);
+  padding: var(--sz-xsm) var(--sz-sm);
+  color: var(--transparent-white-xsm);
+}
+
+.data-temp-unit.active {
+  background-color: var(--black);
+  outline: var(--sz-xxsm) solid var(--transparent-black-xsm);
+  outline-offset: var(--sz-xxsm);
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--sz-lg);
+}
+
+.weather_other_cast_section {
+  display: flex;
+  justify-content: center;
+  gap: var(--sz-lg);
+  flex-wrap: wrap;
+  flex: 1;
+
+  padding-bottom: var(--sz-xlg);
+}
+
+.weather_other_cast_title {
+  text-align: center;
+}
+
+.weather_other_cast {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  flex-basis: 130px;
+  min-height: 70px;
+  border-right: var(--sz-xxsm) solid var(--transparent-black-lg);
+  background-color: var(--transparent-black-lg);
+  border-radius: var(--sz-lg);
+}
+
+.weather_other_cast .title {
+  font-weight: 900;
+}
+
+.hide {
+  transition-behavior: allow-discrete;
+  display: none;
+  scale: 0;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+@starting-style {
+  .error-message-section {
+    scale: 0;
+  }
+}
