@@ -49,7 +49,7 @@ const stopLoadingAddressData = () => {
 const capitalize = (text) =>
   text
     .split(" ")
-    .map((word) => `${word[0].toUpperCase()}${word.slice(1)}`)
+    .map((word) => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`)
     .join(" ");
 
 function ConvertHandler() {
@@ -126,7 +126,7 @@ const SearchAction = {
   sendAddress: async () => {
     try {
       dataLoadingAddressData.classList.remove("hide");
-      const AddressData = await weatherFetch.loadJSON(enterSearchAddress.value);
+      const AddressData = await weatherFetch.loadJSON(enterSearchAddress.value.trim());
       updateDOM(AddressData);
       weatherFetch.hide();
     } catch (err) {
