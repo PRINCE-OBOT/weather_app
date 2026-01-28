@@ -15,13 +15,11 @@ export default class AppFetch {
     try {
       const res = await fetch(this.URL(queryParameter));
 
-      if (res.ok) {
-        return res.json();
-      } else {
-        if (res.status === 404) {
-          this.msg("Data not found");
-          this.display();
-        }
+      if (res.status === 400) {
+        this.msg("Data not found");
+        this.display();
+      } else{
+         if (res.ok) return res.json();
       }
     } catch (err) {
       this.msg("Error fetching data");

@@ -125,9 +125,14 @@ const weatherFetch = new AppFetch(keys.weatherURL);
 const SearchAction = {
   sendAddress: async () => {
     try {
+      if(enterSearchAddress.value.trim() === '') return
       dataLoadingAddressData.classList.remove("hide");
-      const AddressData = await weatherFetch.loadJSON(enterSearchAddress.value.trim());
-      updateDOM(AddressData);
+      const addressData = await weatherFetch.loadJSON(enterSearchAddress.value.trim());
+      if(!addressData){
+        stopLoadingAddressData()
+        return
+      }
+      updateDOM(addressData);
       weatherFetch.hide();
     } catch (err) {
       stopLoadingAddressData();
