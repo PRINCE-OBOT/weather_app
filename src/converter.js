@@ -1,12 +1,15 @@
+
+import keys from './constants'
+
 class Converter {
   constructor() {
-    this.tempUnit = null;
+    this.tempUnit = keys.fahrenheit;
   }
 
   set(tempUnit) {
     this.tempUnit = tempUnit;
   }
-
+  
   get() {
     return this.tempUnit;
   }
@@ -27,11 +30,11 @@ class Converter {
     return this.round((value - 32) * (5 / 9));
   }
 
+
   temp(value) {
     return value === "N/A" ? value : this[this.tempUnit](+value);
   }
 }
 
-const converter = new Converter();
 
-export default converter;
+export default Converter;

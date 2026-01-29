@@ -1,7 +1,7 @@
 import "./style.css";
 import AppFetch from "./appFetch";
 import keys from "./constants";
-import converter from "./converter";
+import Converter from "./converter";
 
 const root = document.documentElement;
 const toggleTheme = document.querySelector("[data-toggle-theme]");
@@ -21,8 +21,11 @@ const tempConverted = document.querySelector('[data-temp="converted"]');
 const tempUnitAbb = document.querySelector('[data-temp="unit"]');
 const address = document.querySelector("[data-address]");
 const tempUnitSection = document.querySelector("[data-temp-unit-section]");
-const tempUnitFahrenheit = document.querySelector(
+const fahrenheit = document.querySelector(
   '[data-temp-unit="fahrenheit"]'
+);
+const celsius = document.querySelector(
+  '[data-temp-unit="celsius"]'
 );
 const notAvailableImg = document.querySelector("[data-not-available-img]");
 
@@ -51,6 +54,9 @@ const capitalize = (text) =>
     .split(" ")
     .map((word) => `${word[0].toUpperCase()}${word.slice(1).toLowerCase()}`)
     .join(" ");
+
+
+const converter = new Converter()
 
 function ConvertHandler() {
   let prevTempUnit = null;
@@ -102,8 +108,10 @@ function ConditionIcon(img) {
 const conIcon = ConditionIcon(conditionIcon);
 
 function updateDOM(AddressData) {
-  address.textContent = capitalize(AddressData.address);
+  
   const todayObj = AddressData.days[0];
+  
+  address.textContent = capitalize(AddressData.address);
   tempConverted.setAttribute("data-temp-value", `${todayObj.temp}`);
   temperature.textContent = todayObj.temp;
   humidity.textContent = todayObj.humidity;
@@ -111,11 +119,13 @@ function updateDOM(AddressData) {
   cloudCover.textContent = todayObj.cloudcover;
   conditionDescription.textContent = todayObj.description;
   condition.textContent = todayObj.conditions;
-  if (!converter.get()) tempUnitFahrenheit.click();
   conIcon.set(todayObj.icon);
 
+  const tempConvertBtn = converter.get() === keys.fahrenheit ? fahrenheit : celsius
+  debugger
+  tempConvertBtn.click()
+
   form.reset();
-  stopLoadingAddressData();
 }
 
 AppFetch.setElem(errorMsg, errorMsgSection);
@@ -128,10 +138,10 @@ const SearchAction = {
       if(enterSearchAddress.value.trim() === '') return
       dataLoadingAddressData.classList.remove("hide");
       const addressData = await weatherFetch.loadJSON(enterSearchAddress.value.trim());
-      if(!addressData){
-        stopLoadingAddressData()
-        return
-      }
+      stopLoadingAddressData()
+
+      if(!addressData) return
+
       updateDOM(addressData);
       weatherFetch.hide();
     } catch (err) {
